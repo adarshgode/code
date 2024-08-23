@@ -1,0 +1,35 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        if(strs == null || strs.length == 0){
+            return new ArrayList<>();
+        }
+        Map<String,List<String>> fmp = new HashMap<>();
+        for(String str:strs){
+            String fS = getFrequencyString(str);
+
+            if(fmp.containsKey(fS)){
+                fmp.get(fS).add(str);
+            }
+            else{
+                List<String> temp = new ArrayList<>();
+                temp.add(str);
+                fmp.put(fS,temp);
+            }
+        }
+        return new ArrayList<>(fmp.values());
+    }
+    private static String getFrequencyString(String str){
+        int[] freq = new int[26];
+        for(char c:str.toCharArray()){
+            freq[c-'a']++;
+        }
+        StringBuilder frequencyString = new StringBuilder("");
+        char c = 'a';
+        for(int i:freq){
+            frequencyString.append(c);
+            frequencyString.append(i);
+            c++;
+        }
+        return frequencyString.toString();
+    }
+}
