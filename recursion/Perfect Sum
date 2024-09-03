@@ -1,0 +1,28 @@
+//This is not optimize code because it give 999/1020 correct ans in gfg
+class Solution{
+
+	public int perfectSum(int arr[],int n, int sum) 
+	{ 
+	    ArrayList<Integer> ans = new ArrayList<>();
+	    int count = f(arr,ans,n,0,0,sum);
+	    return count;
+	}
+	
+	public static int f(int[] arr,ArrayList<Integer> ans,int n,int i,int s,int sum){
+	    if(s > 0) return 0;
+	    if(n==i){
+	       if(s==sum) return 1;
+	       return 0;
+	    }
+	    //peek
+	    ans.add(arr[i]);
+	    s += arr[i];
+	    int l = f(arr,ans,n,i+1,s,sum);
+	    
+	    ///not peek
+	    ans.remove(ans.size()-1);
+	    s -= arr[i];
+	    int r = f(arr,ans,n,i+1,s,sum);
+	    return l+r;
+	}
+}
