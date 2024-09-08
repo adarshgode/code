@@ -1,0 +1,21 @@
+class Solution {
+    ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int n) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(0);
+        f(0,arr,n,ans,0);
+        return ans;
+    }
+    public static void f(int ind,ArrayList<Integer> arr, int n,ArrayList<Integer> ans,int sum){
+        if(ind == n){
+            return;
+        }
+        //peek
+        sum += arr.get(ind);
+        ans.add(sum);
+        f(ind+1,arr,n,ans,sum);
+        
+        //not peek
+        sum -= arr.get(ind);
+        f(ind+1,arr,n,ans,sum);
+    }
+}
