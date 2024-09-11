@@ -1,0 +1,31 @@
+class Solution {
+    public int minFallingPathSum(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[] prev = new int[n];
+        int curr[] = new int[n];
+        for(int i=0;i<n;i++){
+            prev[i] = matrix[0][i];
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int d = matrix[i][j] + prev[j]; // Down
+                int ld = matrix[i][j];
+                if (j - 1 >= 0) ld += prev[j - 1]; // Left diagonal
+                else ld = Integer.MAX_VALUE;
+                
+                int rd = matrix[i][j];
+                if (j + 1 < n) rd += prev[j + 1]; // Right diagonal
+                else rd = Integer.MAX_VALUE;
+                
+                curr[j] = Math.min(d, Math.min(ld, rd)); // Take the minimum of the three paths
+            }
+            prev = curr.clone(); // Copy current row to prev for the next iteration
+        }
+        int min = Integer.MAX_VALUE;
+        for(int i=0;i<n;i++){
+            min = Math.min(min,prev[i]);
+        }
+        return min;
+    }
+}
