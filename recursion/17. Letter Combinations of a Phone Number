@@ -1,0 +1,23 @@
+class Solution {
+    List<String> result = null;
+    String[] mpp = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
+        result = new ArrayList<>();
+        if(digits.length()==0) return result;
+        df(0,digits,new StringBuilder());
+        return result;
+    }
+    void df(int ind,String digits,StringBuilder temp){
+        if(ind == digits.length()){
+            result.add(temp.toString());
+            return;
+        }
+        char ch = digits.charAt(ind);
+        String str = mpp[ch-'0'];
+        for(char c : str.toCharArray()){
+            temp.append(c);
+            df(ind+1,digits,temp);
+            temp.deleteCharAt(temp.length()-1);
+        }
+    }
+}
