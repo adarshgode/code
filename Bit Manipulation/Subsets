@@ -1,0 +1,35 @@
+class Solution {
+    List<List<Integer>> ans  = new ArrayList<>();
+        
+    public List<List<Integer>> subsets(int[] nums) {
+        // helper(nums,0,new ArrayList<>());
+        // return ans;
+        int subsetCount = 1 << nums.length; // 2^n subsets
+        for (int i = 0; i < subsetCount; i++) {
+            List<Integer> tp = new ArrayList<>();
+            for (int j = 0; j < nums.length; j++) {
+                // Check if the j-th bit in i is set (1). If so, include nums[j] in the subset.
+                if ((i & (1 << j)) != 0) {
+                    tp.add(nums[j]);
+                }
+            }
+            ans.add(tp);
+        }
+        return ans;
+    }
+    public void helper(int nums[],int index,List<Integer> sublist){
+        if(index==nums.length){
+            ans.add(new ArrayList<>(sublist));
+            return;
+        }
+        //pick
+        sublist.add(nums[index]);
+        helper(nums,index+1,sublist);
+
+        //backtrack
+        sublist.remove(sublist.size()-1);
+        
+        //no pick
+        helper(nums,index+1,sublist);
+    }
+}
