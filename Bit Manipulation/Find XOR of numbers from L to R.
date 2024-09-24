@@ -1,0 +1,13 @@
+class Solution {
+    public static int findXOR(int l, int r) {
+        int ans = 0;
+        if(r % 4==1) ans = 1;
+        if(r % 4==2) ans = r+1;
+        if(r % 4==3) ans = 0;
+        if(r % 4==0) ans = r;
+        for(int i=1;i<l;i++){
+            ans ^= i;
+        }
+        return ans;
+    }
+}
