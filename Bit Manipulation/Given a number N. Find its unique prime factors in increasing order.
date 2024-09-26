@@ -1,0 +1,30 @@
+class Solution
+{
+    public int[] AllPrimeFactors(int N)
+    {
+        Set<Integer> ans = new HashSet<>();
+        
+        while(N%2 == 0){
+            ans.add(2);
+            N/=2;
+        }
+        
+        for(int i=3;i*i<=N;i++){
+            while(N%i == 0){
+                ans.add(i);
+                N/=i;
+            }
+        }
+        if(N>2){
+            ans.add(N);
+        }
+        // Collections.sort(ans);
+        int temp[] = new int[ans.size()];
+        int i =0;
+        for(int j:ans){
+            temp[i++] = j;
+        }
+        Arrays.sort(temp);
+        return temp;
+    }
+}
