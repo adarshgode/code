@@ -45,3 +45,31 @@ class Solution {
     }
     
 }
+
+// o(n)
+import java.util.*;
+class Solution {
+    public int largestRectangleArea(int[] arr) {
+        int maxAns = 0;
+        Stack<Integer> st = new Stack<>();
+        for(int i=0;i<arr.length;i++){
+            while(!st.isEmpty() && arr[st.peek()] > arr[i]){
+                int el = arr[st.peek()];
+                st.pop();
+                int nse = i;
+                int pse = st.isEmpty() ? -1 : st.peek();
+                maxAns = Math.max(maxAns,el * (nse-pse-1));
+            } 
+            st.push(i);
+        }
+        while(!st.isEmpty()){
+            int el = arr[st.peek()];
+            st.pop();
+            int nse = arr.length;
+            int pse = st.isEmpty() ? -1 : st.peek();
+            maxAns = Math.max(maxAns,el * (nse-pse-1));
+        } 
+        return maxAns;
+    }
+    
+}
