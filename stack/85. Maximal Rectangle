@@ -1,0 +1,41 @@
+class Solution {
+    int lHist(int[] arr){
+        int maxAns = 0;
+        Stack<Integer> st = new Stack<>();
+        int n= arr.length;
+        for(int i=0;i<n;i++){
+            while(!st.isEmpty() && arr[st.peek()] > arr[i]){
+                int el = arr[st.peek()];
+                st.pop();
+                int nse = i;
+                int pse = st.isEmpty() ? -1 : st.peek();
+                maxAns = Math.max(maxAns,el*(nse-pse-1));
+            }
+            st.push(i);
+        }
+        while(!st.isEmpty()){
+            int el = arr[st.peek()];
+            st.pop();
+            int nse = n;
+            int pse = st.isEmpty() ? -1 : st.peek();
+            maxAns = Math.max(maxAns,el*(nse-pse-1));
+        }
+        return maxAns;
+}
+    public int maximalRectangle(char[][] matrix) {
+        int n=matrix.length,m=matrix[0].length,maxArea = 0;
+        int[][] pSum = new int[n][m];
+        for(int j=0;j<m;j++){
+            int sum = 0;
+            for(int i=0;i<n;i++){
+                sum += 1;
+                if(matrix[i][j] == '0') sum=0;
+                pSum[i][j] = sum;
+            }
+        }
+        for(int i=0;i<n;i++){
+            maxArea = Math.max(maxArea,lHist(pSum[i]));
+        }
+        return maxArea;
+    }
+}
