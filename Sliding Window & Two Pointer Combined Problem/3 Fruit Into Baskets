@@ -1,0 +1,26 @@
+class Solution {
+    public static int totalFruits(Integer[] arr) {
+        int l=0,r=0;
+        int maxLen = 0,n = arr.length;
+        Map<Integer,Integer> mpp = new HashMap<>();
+        while(r<n){
+            if(mpp.containsKey(arr[r])){
+                mpp.put(arr[r],mpp.get(arr[r])+1);
+            }else{
+                mpp.put(arr[r],1);
+            }
+            if(mpp.size()>2){
+                mpp.put(arr[l],mpp.get(arr[l])-1);
+                if(mpp.get(arr[l])==0){
+                    mpp.remove(arr[l]);
+                }
+                l++;
+            }
+            if(mpp.size() <= 2){
+                maxLen = Math.max(r-l+1,maxLen);
+            }
+            r++;
+        }
+        return maxLen;
+    }
+}
