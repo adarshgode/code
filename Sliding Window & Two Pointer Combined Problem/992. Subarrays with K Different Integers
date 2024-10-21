@@ -1,0 +1,15 @@
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        int count = 0;
+        for(int i=0;i<nums.length;i++){
+            Map<Integer,Integer> mpp = new HashMap<>();
+            for(int j=i;j<nums.length;j++){
+                mpp.put(nums[j],mpp.getOrDefault(nums[j],0)+1);
+                if(mpp.size() == k){
+                    count++;
+                }else if(mpp.size()>k) break;
+            }
+        }
+        return count;
+    }
+}
