@@ -1,0 +1,37 @@
+import java.util.HashMap;
+
+class Solution {
+    public String minWindow(String s, String t) {
+        HashMap<Character, Integer> mpp = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            mpp.put(t.charAt(i), mpp.getOrDefault(t.charAt(i), 0) + 1);
+        }
+
+        int r = 0, l = 0, sInd = -1, cnt = 0, minLen = Integer.MAX_VALUE;
+        while (r < s.length()) {
+            // Expand the window by adding character at r
+            if (mpp.containsKey(s.charAt(r))) {
+                if (mpp.get(s.charAt(r)) > 0) cnt++;
+                mpp.put(s.charAt(r), mpp.get(s.charAt(r)) - 1);
+            }
+
+            // Shrink the window when a valid window is found
+            while (cnt == t.length()) {
+                if (r - l + 1 < minLen) {
+                    minLen = r - l + 1;
+                    sInd = l;
+                }
+
+                if (mpp.containsKey(s.charAt(l))) {
+                    mpp.put(s.charAt(l), mpp.get(s.charAt(l)) + 1);
+                    if (mpp.get(s.charAt(l)) > 0) cnt--;
+                }
+                l++;
+            }
+
+            r++;
+        }
+
+        return sInd == -1 ? "" : s.substring(sInd, sInd + minLen);
+    }
+}
