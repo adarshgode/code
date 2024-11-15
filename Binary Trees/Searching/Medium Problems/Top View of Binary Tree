@@ -1,0 +1,42 @@
+import java.util.*;
+class Node{
+  int data;
+  Node left;
+  Node right;
+  Node(int data){
+    this.data = data;
+    left = null;
+    right = null;
+  }
+}
+class Pair{
+    int hd;
+    Node root;
+    Pair(int hd,Node root){
+        this.hd = hd;
+        this.root = root;
+    }
+}
+class Solution {
+    static ArrayList<Integer> topView(Node root) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(root == null) return ans;
+        Map<Integer,Integer> mpp = new TreeMap<>();
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(0,root));
+        while(!q.isEmpty()){
+            Pair it = q.remove();
+            int hd = it.hd;
+            Node node = it.root;
+            if(mpp.get(hd) == null) {
+                mpp.put(hd,node.data);
+            }
+            if(node.left != null) q.add(new Pair(hd-1,node.left));
+            if(node.right != null) q.add(new Pair(hd+1,node.right));
+        }
+        for(Map.Entry<Integer,Integer> entry : mpp.entrySet()){
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+}
