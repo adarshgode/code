@@ -1,0 +1,47 @@
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        // Data structure to hold the nodes by (col -> row -> node values)
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> nodes = new TreeMap<>();
+        Queue<Pair<TreeNode, Pair<Integer, Integer>>> todo = new LinkedList<>();
+        
+        // Add the root to the queue with initial position (row=0, col=0)
+        todo.add(new Pair<>(root, new Pair<>(0, 0)));
+        
+        // BFS traversal
+        while (!todo.isEmpty()) {
+            Pair<TreeNode, Pair<Integer, Integer>> current = todo.poll();
+            TreeNode node = current.getKey();
+            int col = current.getValue().getKey();
+            int row = current.getValue().getValue();
+            
+            // Insert the node into the TreeMap structure
+            nodes.computeIfAbsent(col, k -> new TreeMap<>())
+                 .computeIfAbsent(row, k -> new PriorityQueue<>())
+                 .add(node.val);
+            
+            // Add children to the queue with updated coordinates
+            if (node.left != null) {
+                todo.add(new Pair<>(node.left, new Pair<>(col - 1, row + 1)));
+            }
+            if (node.right != null) {
+                todo.add(new Pair<>(node.right, new Pair<>(col + 1, row + 1)));
+            }
+        }
+        
+        // Extract the result from the TreeMap
+        List<List<Integer>> result = new ArrayList<>();
+        for (TreeMap<Integer, PriorityQueue<Integer>> rows : nodes.values()) {
+            List<Integer> colNodes = new ArrayList<>();
+            for (PriorityQueue<Integer> pq : rows.values()) {
+                while (!pq.isEmpty()) {
+                    colNodes.add(pq.poll());
+                }
+            }
+            result.add(colNodes);
+        }
+        
+        return result;
+    }
+}
