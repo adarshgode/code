@@ -1,0 +1,23 @@
+class Solution {
+    
+    public static ArrayList<ArrayList<Integer>> Paths(Node root) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+        if(root == null){
+            return ans;
+        }
+        getLeaf(root,new ArrayList<Integer>(),ans);
+        return ans;
+    }
+    
+    public static void getLeaf(Node root,ArrayList<Integer> temp,ArrayList<ArrayList<Integer>> ans){
+        temp.add(root.data);
+        if(root.left == null && root.right == null){
+            ans.add(new ArrayList<>(temp));
+        }else{
+            if(root.left !=null) getLeaf(root.left,temp,ans);
+            if(root.right != null) getLeaf(root.right,temp,ans);
+        }
+        temp.remove(temp.size()-1);
+        
+    }
+}
