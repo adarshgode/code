@@ -1,0 +1,23 @@
+
+
+class Main {
+    public static void main(String[] args) {
+        int n = 24;
+        for(int i=n+1;;i++){
+            if(check(i) == true){
+                System.out.println(i);
+                break;
+            }
+        }
+    }
+    public static boolean check(int n){
+        int x = n;
+        int rev = 0;
+        while(n!=0){
+            rev = rev*10 + n%10;
+            n /= 10;
+        }
+        if(rev == x) return true;
+        return false;
+    }
+}
