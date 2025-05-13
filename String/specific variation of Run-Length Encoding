@@ -1,0 +1,47 @@
+String str = "aappkkttjjkkffaadd";
+op : -a2p1k1t1j1f1d1
+
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+class Main {
+    public static void main(String[] args) {
+       String str = "aappkkttjjkkffaadd";
+       StringBuilder s = new StringBuilder();
+       s.append(str.charAt(0));
+       int count = 1;
+       
+       
+       for(int i = 1;i<str.length();i++){
+           if(str.charAt(i) == s.charAt(0)){
+               count++;
+           }else{
+               break;
+           }
+       }
+       s.append(count);
+       for(int i = count-1;i<str.length();i++){
+           if(!s.toString().contains(String.valueOf(str.charAt(i))) && s.charAt(s.length()-1) != str.charAt(i)){
+               s.append(str.charAt(i) );
+               s.append(1);
+           }
+       }
+    //   for(int i=0;i<str.length();i++){
+    //       if(!s.toString().contains(String.valueOf(str.charAt(i)))){
+    //           int count = 0;
+    //           s.append(str.charAt(i));
+               
+    //           for(int j=i;j<str.length();j++){
+    //               if(str.charAt(i) == str.charAt(j)){
+    //                   count++;
+    //               }else{
+    //                   i=j;
+    //                   break;
+    //               }
+    //             }
+    //             s.append(count);
+    //       }
+    //   }
+       System.out.println(s);
+    }
+}
