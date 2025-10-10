@@ -1,0 +1,25 @@
+class Solution {
+    int n;
+    int k;
+    public int maximumEnergy(int[] energy, int k) {
+       int ans = Integer.MIN_VALUE;
+       int[] t = new int[energy.length];
+       Arrays.fill(t,Integer.MIN_VALUE);
+       this.n = energy.length;
+       this.k = k;
+
+       int maxEnergy = Integer.MIN_VALUE;
+       for(int i=0;i<n;i++){
+        maxEnergy = Math.max(maxEnergy, solve(energy,i,t));
+       }
+       return maxEnergy;
+    }
+
+    private int solve(int[] energy, int i, int[] t){
+        if(i >= n) return 0;
+        
+        if(t[i] != Integer.MIN_VALUE) return t[i];
+
+        return t[i] = energy[i] + solve(energy, i+k, t);
+    }
+}
