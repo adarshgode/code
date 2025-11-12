@@ -1,0 +1,35 @@
+class Solution {
+    public int minOperations(int[] nums) {
+        int operations = 0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] == 1){
+                operations++;
+            }
+        }
+        if(operations != 0){
+            return nums.length - operations;
+        }
+
+        operations = Integer.MAX_VALUE;
+
+        for(int i = 0;i<nums.length;i++){
+            int gcd = nums[i];
+            for(int j=i+1;j<nums.length;j++){
+                gcd = findGCD(gcd,nums[j]);
+                if(gcd == 1){
+                    operations = Math.min(operations,j-i);
+                }
+            }
+        }
+        if(operations == Integer.MAX_VALUE) return -1;
+        return operations + nums.length-1;
+    }
+    public static int findGCD(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
